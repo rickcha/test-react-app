@@ -1,48 +1,51 @@
 import React, { useState, useEffect } from "react";
 
-const ThirdComponent = () => {
-  console.log("component::ThirdComponent");
+const BottomComponent = ({ value }) => {
+  console.log("Component::BottomComponent");
 
   useEffect(() => {
-    console.log("component::ThirdComponent::useEffect::1");
+    console.log("Component::BottomComponent::useEffect::null");
+  });
+
+  useEffect(() => {
+    console.log("Component::BottomComponent::useEffect::[]");
   }, []);
 
   useEffect(() => {
-    console.log("component::ThirdComponent::useEffect:2");
-  });
+    console.log("Component::BottomComponent::useEffect::value");
+  }, [value]);
 
   return <div>Third Component</div>;
 };
 
-const SecondComponent = () => {
-  console.log("component::SecondComponent");
-
-  return <div>Second Component</div>;
-};
-
-const FirstComponent = () => {
+const TopComponent = () => {
   const [value, setValue] = useState();
 
   useEffect(() => {
-    setTimeout(() => {
-      setValue("1 second");
-    }, 1000);
-
-    setTimeout(() => {
-      setValue("2 second");
-    }, 2000);
-
-    setTimeout(() => {
-      setValue("3 second");
-    }, 3000);
+    console.log("Component::TopComponent::useEffect::[]");
   }, []);
+
+  useEffect(() => {
+    console.log("Component::TopComponent::useEffect::null");
+  });
+
+  //   useEffect(() => {
+  //     setTimeout(() => {
+  //       setValue("1 second");
+  //     }, 1000);
+  //     setTimeout(() => {
+  //       setValue("2 second");
+  //     }, 2000);
+  //     setTimeout(() => {
+  //       setValue("3 second");
+  //     }, 3000);
+  //   }, []);
 
   return (
     <div>
-      <SecondComponent />
-      <ThirdComponent />
+      <BottomComponent value={value} />
     </div>
   );
 };
 
-export default FirstComponent;
+export default TopComponent;

@@ -4,30 +4,28 @@ import LoadingPage from "./page/loading";
 
 const indexPage = lazy(() => import("./page/index"));
 const firstPage = lazy(() => import("./page/first"));
-const secondPage = lazy(() => import("./page/second"));
-const FirstProvider = lazy(() => import("./context/first"));
-const SecondProvider = lazy(() => import("./context/second"));
-const ThirdProvider = lazy(() => import("./context/third"));
+const TopProvider = lazy(() => import("./context/top"));
+const MiddleProvider = lazy(() => import("./context/middle"));
+const BottomProvider = lazy(() => import("./context/bottom"));
 
 function App() {
   return (
-    <Suspense fallback={<LoadingPage />}>
-      <FirstProvider>
-        <SecondProvider>
-          <ThirdProvider>
-            <BrowserRouter>
+    <BrowserRouter>
+      <Suspense fallback={<LoadingPage />}>
+        <TopProvider>
+          <MiddleProvider>
+            <BottomProvider>
               <Suspense fallback={<LoadingPage />}>
                 <Switch>
                   <Route exact path="/" component={indexPage} />
                   <Route exact path="/first" component={firstPage} />
-                  <Route exact path="/second" component={secondPage} />
                 </Switch>
               </Suspense>
-            </BrowserRouter>
-          </ThirdProvider>
-        </SecondProvider>
-      </FirstProvider>
-    </Suspense>
+            </BottomProvider>
+          </MiddleProvider>
+        </TopProvider>
+      </Suspense>
+    </BrowserRouter>
   );
 }
 
