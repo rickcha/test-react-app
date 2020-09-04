@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, lazy } from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import LoadingPage from "./page/loading";
+
+const indexPage = lazy(() => import("./page/index"));
+const firstPage = lazy(() => import("./page/first"));
+const secondPage = lazy(() => import("./page/second"));
+const FirstProvider = lazy(() => import("./context/first"));
+const SecondProvider = lazy(() => import("./context/second"));
+const ThirdProvider = lazy(() => import("./context/third"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<LoadingPage />}>
+      <FirstProvider>
+        <SecondProvider>
+          <ThirdProvider>
+            <BrowserRouter>
+              <Suspense fallback={<LoadingPage />}>
+                <Switch>
+                  <Route exact path="/" component={indexPage} />
+                  <Route exact path="/first" component={firstPage} />
+                  <Route exact path="/second" component={secondPage} />
+                </Switch>
+              </Suspense>
+            </BrowserRouter>
+          </ThirdProvider>
+        </SecondProvider>
+      </FirstProvider>
+    </Suspense>
   );
 }
 
