@@ -14,11 +14,12 @@ const TopProvider = (props) => {
     console.log("Provider::TopProvider::useEffect::null");
   });
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setTop("item");
-  //   }, 1000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      console.log("::--------Tree Shaking-------::");
+      setTop("item");
+    }, 3000);
+  }, []);
 
   return (
     <TopContext.Provider
